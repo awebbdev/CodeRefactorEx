@@ -6,14 +6,47 @@ using System.Threading.Tasks;
 
 namespace BikeDistributor
 {
-    class Receipt
+    public class Receipt
     {
-        private readonly static Bike Defy = new Bike("Giant", "Defy 1", Bike.OneThousand);
-
-        static void Main()
+        public Receipt(Order order)
         {
-            string receipt = $"Brand: {Defy.Brand} \nModel: {Defy.Model}\nPrice: {Defy.Price.ToString()}";
-            Console.WriteLine(receipt);
+            Order = order;
         }
+
+        private Order Order { get; set; }
+
+
+        public string PlainText()
+        {
+
+            var result = new StringBuilder(string.Format("Order Receipt for {0}{1}", Order.Company, Environment.NewLine));
+            foreach (var line in Order.Lines)
+            {
+                result.AppendLine(string.Format("\t{0} x {1} {2} = {3}", line.Quantity, line.Bike.Brand, line.Bike.Model, line.LineAmount.ToString("C")));
+            }
+            result.AppendLine(string.Format("Sub-Total: {0}", Order.SubTotal.ToString("C")));
+            result.AppendLine(string.Format("Tax: {0}", Order.TaxAmount.ToString("C")));
+            result.Append(string.Format("Total: {0}", Order.Total.ToString("C")));
+            return result.ToString();
+        }
+        public string Html()
+        {
+            var result = new StringBuilder(string.Format("<html><body><h1>Order Receipt for {0}</h1>", Order.Company));
+            if (Order.Lines.Any())
+            {
+                result.Append("<ul>");
+                foreach (var line in Order.Lines)
+                {
+                    result.Append(string.Format("<li>{0} x {1} {2} = {3}</li>", line.Quantity, line.Bike.Brand, line.Bike.Model, line.LineAmount.ToString("C")));
+                }
+                result.Append("</ul>");
+            }
+            result.Append(string.Format("<h3>Sub-Total: {0}</h3>", Order.SubTotal.ToString("C")));
+            result.Append(string.Format("<h3>Tax: {0}</h3>", Order.TaxAmount.ToString("C")));
+            result.Append(string.Format("<h2>Total: {0}</h2>", Order.Total.ToString("C")));
+            result.Append("</body></html>");
+            return result.ToString();
+        }
+
     }
 }

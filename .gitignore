@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs/BikeDistributor/v15
+/BikeDistributor/bin/Debug
+/BikeDistributor/obj/Debug
+/BikeDistributor.Test
+/__MACOSX
