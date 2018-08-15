@@ -8,18 +8,30 @@ namespace BikeDistributor
 {
     public class Receipt
     {
+
         public Receipt(Order order)
         {
             Order = order;
+            BuildReceipt();
         }
 
         private Order Order { get; set; }
+        public string Header { get; private set; }
+        public string[] OrderLines { get; private set; }
+        public string SubTotal { get; private set; }
+        public string TaxTotal { get; private set; }
+        public string Total { get; private set; }
+
+        private void BuildReceipt()
+        {
+            Header = string.Format("Order Receipt for {0}{1}", Order.Company, Environment.NewLine);
+        }
 
 
         public string PlainText()
         {
 
-            var result = new StringBuilder(string.Format("Order Receipt for {0}{1}", Order.Company, Environment.NewLine));
+            var result = new StringBuilder();
             foreach (var line in Order.Lines)
             {
                 result.AppendLine(string.Format("\t{0} x {1} {2} = {3}", line.Quantity, line.Bike.Brand, line.Bike.Model, line.LineAmount.ToString("C")));
@@ -29,6 +41,7 @@ namespace BikeDistributor
             result.Append(string.Format("Total: {0}", Order.Total.ToString("C")));
             return result.ToString();
         }
+
         public string Html()
         {
             var result = new StringBuilder(string.Format("<html><body><h1>Order Receipt for {0}</h1>", Order.Company));

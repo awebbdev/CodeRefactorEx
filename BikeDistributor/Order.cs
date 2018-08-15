@@ -39,7 +39,7 @@ namespace BikeDistributor
         public string Receipt(ReceiptType rtype)
         {
             TotalOut();
-            Receipt rec = new Receipt(this);
+            Receipt rec = new Receipt();
             switch (rtype)
             {
                 case ReceiptType.PlainText:
