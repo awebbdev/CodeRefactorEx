@@ -1,37 +1,20 @@
-﻿using System.Collections.Generic;
-
-namespace BikeDistributor
+﻿namespace BikeDistributor
 {
-    public enum Price
-    {
-        OneThousand, TwoThousand, FiveThousand, TenThousand
-    }
     public class Bike
-    {          
-        public Bike(string brand, string model, Price price)
+    {
+        public const int OneThousand = 1000;
+        public const int TwoThousand = 2000;
+        public const int FiveThousand = 5000;
+
+        public Bike(string brand, string model, int price)
         {
             Brand = brand;
             Model = model;
             Price = price;
-            LoadPrices();
         }
 
         public string Brand { get; private set; }
         public string Model { get; private set; }
-        public Price Price { get; private set; }
-        public IDictionary<Price, int> PriceList { get; private set; }
-        
-        private void LoadPrices()
-        {
-            PriceList = new Dictionary<Price, int>
-            {
-                { Price.OneThousand, 1000 },
-                { Price.TwoThousand, 2000 },
-                { Price.FiveThousand, 5000 },
-                { Price.TenThousand, 10000 }
-            };
-        }
+        public int Price { get; set; }
     }
-
-
 }
