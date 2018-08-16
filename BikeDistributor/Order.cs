@@ -29,27 +29,7 @@ namespace BikeDistributor
             foreach (var line in _lines)
             {
                 var thisAmount = 0d;
-                switch (line.Bike.Price)
-                {
-                    case Bike.OneThousand:
-                        if (line.Quantity >= 20)
-                            thisAmount += line.Quantity * line.Bike.Price * .9d;
-                        else
-                            thisAmount += line.Quantity * line.Bike.Price;
-                        break;
-                    case Bike.TwoThousand:
-                        if (line.Quantity >= 10)
-                            thisAmount += line.Quantity * line.Bike.Price * .8d;
-                        else
-                            thisAmount += line.Quantity * line.Bike.Price;
-                        break;
-                    case Bike.FiveThousand:
-                        if (line.Quantity >= 5)
-                            thisAmount += line.Quantity * line.Bike.Price * .8d;
-                        else
-                            thisAmount += line.Quantity * line.Bike.Price;
-                        break;
-                }
+                thisAmount = CalcDiscount(line, thisAmount);
                 result.AppendLine(string.Format("\t{0} x {1} {2} = {3}", line.Quantity, line.Bike.Brand, line.Bike.Model, thisAmount.ToString("C")));
                 totalAmount += thisAmount;
             }
@@ -70,27 +50,7 @@ namespace BikeDistributor
                 foreach (var line in _lines)
                 {
                     var thisAmount = 0d;
-                    switch (line.Bike.Price)
-                    {
-                        case Bike.OneThousand:
-                            if (line.Quantity >= 20)
-                                thisAmount += line.Quantity * line.Bike.Price * .9d;
-                            else
-                                thisAmount += line.Quantity * line.Bike.Price;
-                            break;
-                        case Bike.TwoThousand:
-                            if (line.Quantity >= 10)
-                                thisAmount += line.Quantity * line.Bike.Price * .8d;
-                            else
-                                thisAmount += line.Quantity * line.Bike.Price;
-                            break;
-                        case Bike.FiveThousand:
-                            if (line.Quantity >= 5)
-                                thisAmount += line.Quantity * line.Bike.Price * .8d;
-                            else
-                                thisAmount += line.Quantity * line.Bike.Price;
-                            break;
-                    }
+                    thisAmount = CalcDiscount(line, thisAmount);
                     result.Append(string.Format("<li>{0} x {1} {2} = {3}</li>", line.Quantity, line.Bike.Brand, line.Bike.Model, thisAmount.ToString("C")));
                     totalAmount += thisAmount;
                 }
@@ -102,6 +62,23 @@ namespace BikeDistributor
             result.Append(string.Format("<h2>Total: {0}</h2>", (totalAmount + tax).ToString("C")));
             result.Append("</body></html>");
             return result.ToString();
+        }
+
+        private static double CalcDiscount(Line line, double thisAmount)
+        {
+            switch (line.Bike.Price)
+            {
+                case Bike.OneThousand:
+                    OneThousand oneThousand = new OneThousand(line, thisAmount);
+                    return oneThousand.ApplyDiscount();
+                case Bike.TwoThousand:
+                    TwoThousand twoThousand = new TwoThousand(line, thisAmount);
+                    return twoThousand.ApplyDiscount();
+                case Bike.FiveThousand:
+                    FiveThousand fiveThousand = new FiveThousand(line, thisAmount);
+                    return fiveThousand.ApplyDiscount();
+            }
+            return thisAmount;
         }
 
     }
