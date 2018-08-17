@@ -7,64 +7,32 @@ namespace BikeDistributor
 {
     public class Order
     {
-        private const double TaxRate = .0725d;
-        private readonly IList<Line> _lines = new List<Line>();
+        public IList<Line> Lines { get; private set; }
 
         public Order(string company)
         {
             Company = company;
+            Lines = new List<Line>();
         }
 
         public string Company { get; private set; }
 
         public void AddLine(Line line)
         {
-            _lines.Add(line);
+            Lines.Add(line);
         }
 
         public string Receipt()
         {
-            var totalAmount = 0d;
-            var result = new StringBuilder(string.Format("Order Receipt for {0}{1}", Company, Environment.NewLine));
-            foreach (var line in _lines)
-            {
-                var thisAmount = 0d;
-                PriceQuantity priceQuantity = new PriceQuantity(line, thisAmount);
-                thisAmount = priceQuantity.ApplyDiscount();
-                result.AppendLine(string.Format("\t{0} x {1} {2} = {3}", line.Quantity, line.Bike.Brand, line.Bike.Model, thisAmount.ToString("C")));
-                totalAmount += thisAmount;
-            }
-            result.AppendLine(string.Format("Sub-Total: {0}", totalAmount.ToString("C")));
-            var tax = totalAmount * TaxRate;
-            result.AppendLine(string.Format("Tax: {0}", tax.ToString("C")));
-            result.Append(string.Format("Total: {0}", (totalAmount + tax).ToString("C")));
-            return result.ToString();
+            PlainTextReceipt plainTextReceipt = new PlainTextReceipt(this);
+            return plainTextReceipt.PrintReceipt();
         }
 
         public string HtmlReceipt()
         {
-            var totalAmount = 0d;
-            var result = new StringBuilder(string.Format("<html><body><h1>Order Receipt for {0}</h1>", Company));
-            if (_lines.Any())
-            {
-                result.Append("<ul>");
-                foreach (var line in _lines)
-                {
-                    var thisAmount = 0d;
-                    PriceQuantity priceQuantity = new PriceQuantity(line, thisAmount);
-                    thisAmount = priceQuantity.ApplyDiscount();
-                    result.Append(string.Format("<li>{0} x {1} {2} = {3}</li>", line.Quantity, line.Bike.Brand, line.Bike.Model, thisAmount.ToString("C")));
-                    totalAmount += thisAmount;
-                }
-                result.Append("</ul>");
-            }
-            result.Append(string.Format("<h3>Sub-Total: {0}</h3>", totalAmount.ToString("C")));
-            var tax = totalAmount * TaxRate;
-            result.Append(string.Format("<h3>Tax: {0}</h3>", tax.ToString("C")));
-            result.Append(string.Format("<h2>Total: {0}</h2>", (totalAmount + tax).ToString("C")));
-            result.Append("</body></html>");
-            return result.ToString();
-        }
+            HtmlReceipt htmlReceipt = new HtmlReceipt(this);
+            return htmlReceipt.PrintReceipt();
+        } 
 
     }
 }
