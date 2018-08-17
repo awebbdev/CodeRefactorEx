@@ -7,15 +7,13 @@ namespace BikeDistributor
 {
     public class Order
     {
-        public IList<Line> Lines { get; private set; }
-
         public Order(string company)
         {
             Company = company;
-            Lines = new List<Line>();
         }
 
         public string Company { get; private set; }
+        public IList<Line> Lines { get; private set; } = new List<Line>();
 
         public void AddLine(Line line)
         {

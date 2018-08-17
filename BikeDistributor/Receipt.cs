@@ -10,7 +10,7 @@ namespace BikeDistributor
     {
         private const double TaxRate = .0725d;
         protected double TotalAmount { get; set; }
-        protected StringBuilder ReceiptResult { get; set; }
+        protected StringBuilder ReceiptResult { get; set; } = new StringBuilder();
         protected Order Order { get; set; }
 
         protected double CalculateTax()

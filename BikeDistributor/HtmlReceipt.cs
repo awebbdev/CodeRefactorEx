@@ -17,8 +17,8 @@ namespace BikeDistributor
         {
             ReceiptResult.Append(string.Format("<html><body><h1>Order Receipt for {0}</h1>", Order.Company));
             PrintLines();
-            ReceiptResult.AppendLine(string.Format("<h3>Sub-Total: {0}</h3>", TotalAmount.ToString("C")));
-            ReceiptResult.AppendLine(string.Format("<h3>Tax: {0}</h3>", CalculateTax().ToString("C")));
+            ReceiptResult.Append(string.Format("<h3>Sub-Total: {0}</h3>", TotalAmount.ToString("C")));
+            ReceiptResult.Append(string.Format("<h3>Tax: {0}</h3>", CalculateTax().ToString("C")));
             ReceiptResult.Append(string.Format("<h2>Total: {0}</h2>", TotalAmount.ToString("C")));
             ReceiptResult.Append("</body></html>");
             return ReceiptResult.ToString();

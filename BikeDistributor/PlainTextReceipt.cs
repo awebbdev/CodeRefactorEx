@@ -15,7 +15,7 @@ namespace BikeDistributor
 
         public string PrintReceipt()
         {
-            ReceiptResult.AppendLine(string.Format("Order Receipt for {0}{1}", Order.Company, Environment.NewLine));
+            ReceiptResult.Append(string.Format("Order Receipt for {0}{1}", Order.Company, Environment.NewLine));
             PrintLines();
             ReceiptResult.AppendLine(string.Format("Sub-Total: {0}", TotalAmount.ToString("C")));
             ReceiptResult.AppendLine(string.Format("Tax: {0}", CalculateTax().ToString("C")));
