@@ -19,13 +19,19 @@ namespace BikeDistributor
         {
             Lines.Add(line);
         }
-
+        /// <summary>
+        /// Print a plain text receipt
+        /// </summary>
+        /// <returns>Plain Text Receipt String</returns>
         public string Receipt()
         {
             PlainTextReceipt plainTextReceipt = new PlainTextReceipt(this);
             return plainTextReceipt.PrintReceipt();
         }
-
+        /// <summary>
+        /// Print an HTML formatted receipt string
+        /// </summary>
+        /// <returns>An HTML formatted receipt string</returns>
         public string HtmlReceipt()
         {
             HtmlReceipt htmlReceipt = new HtmlReceipt(this);

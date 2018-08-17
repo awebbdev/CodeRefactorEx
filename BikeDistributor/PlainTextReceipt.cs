@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace BikeDistributor
 {
+    /// <summary>
+    /// A class to provide a plain text receipt
+    /// </summary>
     class PlainTextReceipt : Receipt, IReceipt
     {
         public PlainTextReceipt(Order order)
         {
             Order = order;
         }
-
+        /// <summary>
+        /// Builds a plain text formatted receipt string
+        /// </summary>
+        /// <returns>A plain text Receipt string</returns>
         public string PrintReceipt()
         {
             ReceiptResult.Append(string.Format("Order Receipt for {0}{1}", Order.Company, Environment.NewLine));
@@ -22,7 +28,9 @@ namespace BikeDistributor
             ReceiptResult.Append(string.Format("Total: {0}", TotalAmount.ToString("C")));
             return ReceiptResult.ToString();
         }
-
+        /// <summary>
+        /// Processes each line item and adds to the string builder object
+        /// </summary>
         private void PrintLines()
         {
             foreach (var line in Order.Lines)

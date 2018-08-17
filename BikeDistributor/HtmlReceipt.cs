@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace BikeDistributor
 {
+    /// <summary>
+    /// A class to return an HTML formatted receipt
+    /// </summary>
     class HtmlReceipt : Receipt, IReceipt
     {
         public HtmlReceipt(Order order)
         {
             Order = order;
         }
-
+        /// <summary>
+        /// Builds and returns an HTML formated receipt
+        /// </summary>
+        /// <returns>An HTML formatted receipt</returns>
         public string PrintReceipt()
         {
             ReceiptResult.Append(string.Format("<html><body><h1>Order Receipt for {0}</h1>", Order.Company));
@@ -23,7 +29,9 @@ namespace BikeDistributor
             ReceiptResult.Append("</body></html>");
             return ReceiptResult.ToString();
         }
-
+        /// <summary>
+        /// Processes each line item if any for an order and appends to the string builder object
+        /// </summary>
         private void PrintLines()
         {
             if (Order.Lines.Any())

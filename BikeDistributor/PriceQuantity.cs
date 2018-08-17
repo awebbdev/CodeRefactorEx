@@ -1,5 +1,8 @@
 ﻿namespace BikeDistributor
 {
+    /// <summary>
+    /// A discount derived class that applies a discount based on price and quantity purchased
+    /// </summary>
     class PriceQuantity : Discount, IDiscount
     {
         public PriceQuantity(Line line, double thisAmount) : base (line, thisAmount) { }
