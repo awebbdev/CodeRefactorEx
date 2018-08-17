@@ -24,9 +24,20 @@ namespace BikeDistributor
         protected double CalculateLineTotals(Line line)
         {
             var lineTotal = .0d;
-            PriceQuantity priceQuantity = new PriceQuantity(line, lineTotal);
-            lineTotal = priceQuantity.ApplyDiscount();
+            IList<IDiscount> Discounts = new List<IDiscount>();
+            IDiscount priceQuantity = new PriceQuantity(line, lineTotal);
+            Discounts.Add(priceQuantity);
+            lineTotal = CalculateDiscounts(Discounts, lineTotal);
             TotalAmount += lineTotal;
+            return lineTotal;
+        }
+
+        protected double CalculateDiscounts(IList<IDiscount> discounts, double lineTotal)
+        {
+            foreach (IDiscount discount in discounts)
+            {
+                lineTotal = discount.ApplyDiscount();
+            }
             return lineTotal;
         }
     }
