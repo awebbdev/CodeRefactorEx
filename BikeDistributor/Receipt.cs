@@ -9,12 +9,6 @@ namespace BikeDistributor
     class Receipt
     {
         private const double TaxRate = .0725d;
-
-        public Receipt(Order order)
-        {
-            Order = order;
-        }
-
         protected double TotalAmount { get; set; }
         protected StringBuilder ReceiptResult { get; set; }
         protected Order Order { get; set; }
