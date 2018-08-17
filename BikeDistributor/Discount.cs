@@ -16,7 +16,5 @@ namespace BikeDistributor
             Line = line;
             ThisAmount = thisAmount;
         }
-
-
     }
 }

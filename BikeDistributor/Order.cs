@@ -29,7 +29,8 @@ namespace BikeDistributor
             foreach (var line in _lines)
             {
                 var thisAmount = 0d;
-                thisAmount = CalcDiscount(line, thisAmount);
+                PriceQuantity priceQuantity = new PriceQuantity(line, thisAmount);
+                thisAmount = priceQuantity.ApplyDiscount();
                 result.AppendLine(string.Format("\t{0} x {1} {2} = {3}", line.Quantity, line.Bike.Brand, line.Bike.Model, thisAmount.ToString("C")));
                 totalAmount += thisAmount;
             }
@@ -50,7 +51,8 @@ namespace BikeDistributor
                 foreach (var line in _lines)
                 {
                     var thisAmount = 0d;
-                    thisAmount = CalcDiscount(line, thisAmount);
+                    PriceQuantity priceQuantity = new PriceQuantity(line, thisAmount);
+                    thisAmount = priceQuantity.ApplyDiscount();
                     result.Append(string.Format("<li>{0} x {1} {2} = {3}</li>", line.Quantity, line.Bike.Brand, line.Bike.Model, thisAmount.ToString("C")));
                     totalAmount += thisAmount;
                 }
@@ -62,23 +64,6 @@ namespace BikeDistributor
             result.Append(string.Format("<h2>Total: {0}</h2>", (totalAmount + tax).ToString("C")));
             result.Append("</body></html>");
             return result.ToString();
-        }
-
-        private static double CalcDiscount(Line line, double thisAmount)
-        {
-            switch (line.Bike.Price)
-            {
-                case Bike.OneThousand:
-                    OneThousand oneThousand = new OneThousand(line, thisAmount);
-                    return oneThousand.ApplyDiscount();
-                case Bike.TwoThousand:
-                    TwoThousand twoThousand = new TwoThousand(line, thisAmount);
-                    return twoThousand.ApplyDiscount();
-                case Bike.FiveThousand:
-                    FiveThousand fiveThousand = new FiveThousand(line, thisAmount);
-                    return fiveThousand.ApplyDiscount();
-            }
-            return thisAmount;
         }
 
     }

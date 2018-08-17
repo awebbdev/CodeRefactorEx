@@ -41,13 +41,11 @@
   <ItemGroup>
     <Compile Include="Discount.cs" />
     <Compile Include="IDiscount.cs" />
-    <Compile Include="FiveThousand.cs" />
-    <Compile Include="OneThousand.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Bike.cs" />
+    <Compile Include="PriceQuantity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Line.cs" />
-    <Compile Include="TwoThousand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
